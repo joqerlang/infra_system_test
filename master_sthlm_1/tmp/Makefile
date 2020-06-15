@@ -15,8 +15,5 @@ master:
 #	boot_service
 	git clone https://github.com/joqerlang/boot_service.git;	
 	cp boot_service/src/*.app boot_service/ebin;
-	erlc -o boot_service/ebin boot_service/src/*.erl;
-#	test_agent
-	cp ../test_src/*.app ../test_ebin;
-	erlc -o ../test_ebin ../test_src/*.erl;
-	erl -pa ../test_ebin -pa */ebin -test_agent master -s test_agent start -sname test_master_sthlm_1
+	erlc -o boot_service/ebin boot_service/src/*.erl;	
+	erl -pa */ebin -boot_service num_services 3 -boot_service services orchistrate_serviceXcatalog_serviceXiaas_service -s boot_service boot -sname master_sthlm_1
