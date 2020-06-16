@@ -25,7 +25,7 @@
 
 
 
--export([
+-export([boot/0
 	]).
 
 -export([start/0,
@@ -44,7 +44,8 @@
 
 %% Asynchrounus Signals
 
-
+boot()->
+    application:start(?MODULE).
 
 %% Gen server functions
 
@@ -79,6 +80,17 @@ heart_beat(Interval)->
 %% --------------------------------------------------------------------
 init([]) ->
     
+    Env=application:get_all_env(),
+    case lists:keyfind(type,1,Env) of
+	{type,worker}-> %% Normal worker
+	    ok;
+	{type,master}->
+	    {num_services,NumAtom}=lists:keyfind(num_services,1,Env),
+	    {services,ServicesAtom}=lists:keyfind(services,1,Env),
+	    ok=application:set_env(boot_service,num_services,NumAtom),
+	    ok=application:set_env(boot_service,services,ServicesAtom)
+    end,
+    application:start(boot_service),
     {ok, #state{}}.
 %% --------------------------------------------------------------------
 %% Function: handle_call/3
