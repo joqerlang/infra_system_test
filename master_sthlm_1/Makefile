@@ -20,6 +20,6 @@ all:
 	cp boot_service/src/*.app boot_service/ebin;
 	erlc -D test -o boot_service/ebin boot_service/src/*.erl;
 #	test_agent
-	cp ../test_src/*.app ../test_ebin;
-	erlc -o ../test_ebin ../test_src/*.erl;
-	erl -pa ../test_ebin -pa */ebin -test_agent type master -test_agent num_services 3 -test_agent services orchistrate_serviceXcatalog_serviceXiaas_service -s test_agent boot -sname master_sthlm_1
+	cp ../test_agent/src/*.app ../test_agent/ebin;
+	erlc -o ../test_agent/ebin ../test_agent/src/*.erl;
+	erl -pa ../test_agent/ebin -pa */ebin -test_agent type master -test_agent num_services 3 -test_agent services orchistrate_serviceXcatalog_serviceXiaas_service -s test_agent boot -sname master_sthlm_1 
